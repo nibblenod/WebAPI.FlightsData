@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using WebAPI.FlightsData.Data;
 using WebAPI.FlightsData.Models;
 
@@ -5,10 +6,10 @@ namespace WebAPI.FlightsData.Services;
 
 public interface IFlightService
 {
-    public List<Flight> GetAllFlights();
+    public List<Flight?> GetAllFlights();
     public Flight? GetFlightById(int id);
-    public Flight CreateFlight(Flight flight);
-    public Flight UpdateFlight(int id, Flight updatedFlight);
+    public Flight? CreateFlight(Flight? flight);
+    public Flight? UpdateFlight(int id, Flight updatedFlight);
     public string? DeleteFlight(int id);
 }
 
@@ -21,7 +22,7 @@ public class FlightService : IFlightService
         _dbContext = dbContext;
     }
 
-    public Flight CreateFlight(Flight flight)
+    public Flight? CreateFlight(Flight? flight)
     {
         var savedFlight = _dbContext.Flights.Add(flight);
         _dbContext.SaveChanges();
@@ -30,7 +31,7 @@ public class FlightService : IFlightService
 
     public string? DeleteFlight(int id)
     {
-        Flight savedFlight = _dbContext.Flights.Find(id);
+        Flight? savedFlight = _dbContext.Flights.Find(id);
 
         if (savedFlight == null)
         {
@@ -43,20 +44,20 @@ public class FlightService : IFlightService
         return $"Successfully deleted flight with id: {id}";
     }
 
-    public List<Flight> GetAllFlights()
+    public List<Flight?> GetAllFlights()
     {
         return _dbContext.Flights.ToList();
     }
 
     public Flight? GetFlightById(int id)
     {
-        Flight savedFlight = _dbContext.Flights.Find(id);
+        Flight? savedFlight = _dbContext.Flights.Find(id);
         return savedFlight;
     }
 
-    public Flight UpdateFlight(int id, Flight flight)
+    public Flight? UpdateFlight(int id, Flight flight)
     {
-        Flight savedFlight = _dbContext.Flights.Find(id);
+        Flight? savedFlight = _dbContext.Flights.Find(id);
 
         if (savedFlight == null)
         {

@@ -10,5 +10,5 @@ public class FlightsDbContext: DbContext
             
     }
     
-    public DbSet<Flight> Flights { get; set; }
+    public DbSet<Flight?> Flights { get; set; }
 }
